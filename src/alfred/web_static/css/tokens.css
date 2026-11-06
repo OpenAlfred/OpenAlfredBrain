@@ -1,0 +1,108 @@
+/* Design-Tokens: Farben, Schrift, Abstände. Zwei Themes über data-theme am <html>.
+   Die Bedeutung der Farben bleibt in beiden gleich:
+   accent = Alfred, ok = läuft/frei, warn = wartet/fragt nach, danger = Fehler, violet = Werkzeug/Denker. */
+
+:root {
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --fs-2xs: .72rem;
+  --fs-xs: .78rem;
+  --fs-sm: .87rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.14rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.95rem;
+
+  --r-xs: 6px;
+  --r-sm: 9px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --sidebar-w: 252px;
+  --topbar-h: 58px;
+  --tabbar-h: 62px;
+  --content-w: 1240px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #07080d;
+  --bg-side: #0a0c12;
+  --surface: #10121a;
+  --surface-2: #161923;
+  --surface-3: #1e222e;
+  --surface-hover: rgba(255, 255, 255, .045);
+  --line: rgba(255, 255, 255, .07);
+  --line-2: rgba(255, 255, 255, .13);
+  --text: #eef0f6;
+  --text-2: #a6adbf;
+  --text-3: #7c859e;
+
+  --accent: #7f8cff;
+  --accent-2: #39c9f5;
+  --accent-ink: #090b12;
+  --accent-soft: rgba(127, 140, 255, .14);
+  --accent-line: rgba(127, 140, 255, .42);
+  --ok: #3fdc98;
+  --ok-soft: rgba(63, 220, 152, .13);
+  --warn: #ffb64a;
+  --warn-soft: rgba(255, 182, 74, .13);
+  --danger: #ff6b7e;
+  --danger-soft: rgba(255, 107, 126, .13);
+  --violet: #b995ff;
+  --violet-soft: rgba(185, 149, 255, .14);
+  --info: #4cc9f0;
+  --info-soft: rgba(76, 201, 240, .13);
+
+  --grad: linear-gradient(135deg, #8d7bff 0%, #39c9f5 100%);
+  --shadow-sm: 0 1px 0 rgba(255, 255, 255, .035) inset, 0 1px 2px rgba(0, 0, 0, .35);
+  --shadow-md: 0 1px 0 rgba(255, 255, 255, .045) inset, 0 14px 34px -14px rgba(0, 0, 0, .7);
+  --shadow-pop: 0 24px 70px -18px rgba(0, 0, 0, .85), 0 0 0 1px var(--line-2);
+  --page-glow:
+    radial-gradient(1100px 460px at 78% -12%, rgba(127, 140, 255, .13), transparent 62%),
+    radial-gradient(760px 380px at -4% -6%, rgba(57, 201, 245, .07), transparent 58%);
+  --scrim: rgba(3, 4, 8, .62);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f1f2f8;
+  --bg-side: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f4f5fb;
+  --surface-3: #eaecf6;
+  --surface-hover: rgba(20, 26, 60, .04);
+  --line: rgba(20, 26, 60, .09);
+  --line-2: rgba(20, 26, 60, .16);
+  --text: #0e1220;
+  --text-2: #475068;
+  --text-3: #686f86;
+
+  --accent: #4b59ee;
+  --accent-2: #0a9fd6;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(75, 89, 238, .10);
+  --accent-line: rgba(75, 89, 238, .38);
+  --ok: #0a8559;
+  --ok-soft: rgba(12, 154, 104, .11);
+  --warn: #9a5b04;
+  --warn-soft: rgba(224, 150, 20, .15);
+  --danger: #d4344b;
+  --danger-soft: rgba(212, 52, 75, .10);
+  --violet: #7a46f0;
+  --violet-soft: rgba(122, 70, 240, .10);
+  --info: #0877a0;
+  --info-soft: rgba(10, 134, 180, .11);
+
+  --grad: linear-gradient(135deg, #4f46e5 0%, #0b7fc4 100%);  /* dunkel genug für weiße Schrift */
+  --shadow-sm: 0 1px 2px rgba(20, 26, 60, .06), 0 0 0 1px rgba(20, 26, 60, .015);
+  --shadow-md: 0 14px 34px -16px rgba(20, 26, 60, .26);
+  --shadow-pop: 0 24px 60px -18px rgba(20, 26, 60, .35), 0 0 0 1px var(--line-2);
+  --page-glow:
+    radial-gradient(1000px 420px at 78% -14%, rgba(75, 89, 238, .09), transparent 62%),
+    radial-gradient(700px 340px at -4% -6%, rgba(10, 159, 214, .06), transparent 58%);
+  --scrim: rgba(20, 24, 48, .38);
+}

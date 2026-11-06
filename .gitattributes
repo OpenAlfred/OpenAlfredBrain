@@ -1,0 +1,4 @@
+# Alles mit LF speichern und auschecken: Das Projekt läuft auf dem Mini-PC unter Linux, und
+# Shell-Skripte wie systemd-Units vertragen kein CRLF. Windows-Editoren kommen mit LF zurecht.
+* text=auto eol=lf
+*.wav binary

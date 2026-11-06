@@ -1,0 +1,221 @@
+/* Ansicht Ernährung und die Diagramme aus js/charts.js (Klassen ch-…; die Diagramme sind für jede Ansicht gedacht).
+   Farben nur über Variablen aus tokens.css, damit Dunkel und Hell stimmen. */
+
+/* --- Diagramm: Ring ------------------------------------------------------------------------------------- */
+
+.ch-ring { --ring-s: 148px; position: relative; flex: none; width: var(--ring-s); height: var(--ring-s); }
+.ch-ring-svg { display: block; width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+.ch-ring-spur { fill: none; stroke: var(--surface-3); }
+.ch-ring-bogen { fill: none; stroke-linecap: round; transition: stroke-dashoffset 1.1s var(--ease); }
+
+.ch-f-accent { --ring-weich: var(--accent-soft); }
+.ch-f-ok { --ring-weich: var(--ok-soft); }
+.ch-f-info { --ring-weich: var(--info-soft); }
+.ch-f-violet { --ring-weich: var(--violet-soft); }
+.ch-f-warn { --ring-weich: var(--warn-soft); }
+.ch-ring.ch-ohne-ziel .ch-ring-spur { stroke: var(--ring-weich); }
+
+.ch-f-accent .ch-stop-a { stop-color: var(--accent); }
+.ch-f-accent .ch-stop-b { stop-color: var(--accent-2); }
+.ch-f-ok .ch-stop-a { stop-color: var(--ok); }
+.ch-f-ok .ch-stop-b { stop-color: var(--info); }
+.ch-f-info .ch-stop-a { stop-color: var(--info); }
+.ch-f-info .ch-stop-b { stop-color: var(--accent); }
+.ch-f-violet .ch-stop-a { stop-color: var(--violet); }
+.ch-f-violet .ch-stop-b { stop-color: var(--accent); }
+.ch-f-warn .ch-stop-a { stop-color: var(--warn); }
+.ch-f-warn .ch-stop-b { stop-color: var(--danger); }
+.ch-ring.ch-ueber .ch-stop-a { stop-color: var(--warn); }
+.ch-ring.ch-ueber .ch-stop-b { stop-color: var(--danger); }
+.ch-ring.ch-erreicht .ch-stop-a { stop-color: var(--ok); }
+.ch-ring.ch-erreicht .ch-stop-b { stop-color: var(--info); }
+
+.ch-ring-mitte {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: calc(var(--ring-s) * .13); text-align: center; pointer-events: none;
+}
+.ch-ring-zahl { font-size: calc(var(--ring-s) * .235); font-weight: 720; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.ch-ring-text { margin-top: calc(var(--ring-s) * .04); font-size: max(.66rem, calc(var(--ring-s) * .084)); line-height: 1.2; color: var(--text-3); white-space: nowrap; }
+.ch-ring.ch-ueber .ch-ring-zahl { color: var(--warn); }
+.ch-ring.ch-erreicht .ch-ring-zahl { color: var(--ok); }
+
+/* --- Diagramm: Linie ------------------------------------------------------------------------------------ */
+
+.ch-linie { position: relative; width: 100%; touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+.ch-linie > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.ch-gitter { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 2 5; }
+.ch-text { fill: var(--text-3); font: 500 11px/1 var(--font-sans); font-variant-numeric: tabular-nums; }
+.ch-text-ziel { fill: var(--ok); }
+.ch-fl-oben { stop-color: var(--accent); stop-opacity: .3; }
+.ch-fl-unten { stop-color: var(--accent); stop-opacity: 0; }
+.ch-flaeche { stroke: none; }
+.ch-pfad { fill: none; stroke: var(--accent); stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+.ch-ziel-pfad { stroke: var(--ok); stroke-width: 1.5; stroke-dasharray: 5 5; opacity: .9; }
+.ch-punkt { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.ch-punkt.ch-letzter { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
+.ch-halo { fill: var(--accent-soft); }
+.ch-fuehrung { stroke: var(--line-2); stroke-width: 1; }
+.ch-marke { fill: var(--surface); stroke: var(--accent); stroke-width: 2.5; }
+.ch-tip {
+  position: absolute; z-index: 2; display: flex; flex-direction: column; gap: 1px; padding: 6px 10px; border-radius: var(--r-sm);
+  border: 1px solid var(--line-2); background: var(--surface-3); box-shadow: var(--shadow-pop); font-size: var(--fs-xs);
+  white-space: nowrap; pointer-events: none; transform: translate(-50%, calc(-100% - 12px));
+}
+.ch-tip b { font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+.ch-tip span { color: var(--text-3); }
+.ch-tip.unten { transform: translate(-50%, 12px); }
+
+/* --- Diagramm: Säulen ----------------------------------------------------------------------------------- */
+
+.ch-saeulen { display: flex; flex-direction: column; gap: 9px; width: 100%; }
+.ch-feld { position: relative; height: var(--hoehe, 170px); }
+.ch-reihe { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(var(--n, 7), minmax(0, 1fr)); gap: 8px; }
+.ch-spalte { position: relative; min-width: 0; }
+.ch-balken {
+  position: absolute; left: 14%; right: 14%; bottom: 0; height: calc(var(--h, 0) * 1%); min-height: 4px;
+  border-radius: 8px 8px 3px 3px; background: color-mix(in srgb, var(--accent) 38%, var(--surface-3));
+  transition: height .9s var(--ease), background .2s;
+}
+.ch-spalte:hover .ch-balken { background: color-mix(in srgb, var(--accent) 55%, var(--surface-3)); }
+.ch-spalte.hervor .ch-balken { background: var(--grad); }
+.ch-spalte.ch-ueber .ch-balken { background: color-mix(in srgb, var(--warn) 58%, var(--surface-3)); }
+.ch-spalte.hervor.ch-ueber .ch-balken { background: linear-gradient(180deg, var(--warn), color-mix(in srgb, var(--warn) 65%, var(--danger))); }
+.ch-spalte.leer .ch-balken { background: var(--surface-3); }
+.ch-wert {
+  position: absolute; left: 50%; bottom: calc(100% + 5px); transform: translateX(-50%);
+  font-size: var(--fs-2xs); font-weight: 620; color: var(--text-2); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ch-spalte.hervor .ch-wert { color: var(--text); }
+.ch-spalte.leer .ch-wert { color: var(--text-3); font-weight: 500; }
+.ch-ziel { position: absolute; left: 0; right: 0; bottom: calc(var(--z, 0) * 1%); z-index: 1; border-top: 1.5px dashed var(--ok); opacity: .9; pointer-events: none; }
+.ch-achse { display: grid; grid-template-columns: repeat(var(--n, 7), minmax(0, 1fr)); gap: 8px; }
+.ch-achse > span { text-align: center; font-size: var(--fs-xs); font-weight: 560; color: var(--text-3); }
+.ch-achse > span.hervor { color: var(--text); font-weight: 680; }
+
+/* --- Ernährung: Seitenaufbau ---------------------------------------------------------------------------- */
+
+.er-kopf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.er-haupt { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 16px; align-items: start; }
+.er-spalte { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.er-fehler { margin-bottom: 16px; }
+
+/* Ringkarten: Zahl im Ring, Zustand als Abzeichen rechts oben */
+.er-ring { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.er-ring-kopf { align-self: stretch; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-height: 28px; }
+.er-ring[data-farbe="accent"] .card-title .icon { color: var(--accent); }
+.er-ring[data-farbe="ok"] .card-title .icon { color: var(--ok); }
+.er-ring-fuss { font-size: var(--fs-xs); color: var(--text-3); text-align: center; }
+
+/* Fett, Kohlenhydrate, Verteilung */
+.er-naehr { display: flex; flex-direction: column; gap: 14px; }
+.er-naehr > .card-h { margin-bottom: 0; }
+.er-minis { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 10px; }
+.er-mini { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); }
+.er-mini .stat-value { font-size: 1.4rem; }
+.er-verteilung { display: grid; gap: 8px; }
+.er-verteilung-kopf { font-size: var(--fs-xs); color: var(--text-3); }
+.er-legende-reihe { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--fs-xs); color: var(--text-2); }
+.er-legende-reihe > span { display: inline-flex; align-items: center; gap: 6px; }
+.er-legende-reihe b { color: var(--text); font-weight: 640; font-variant-numeric: tabular-nums; }
+.er-punkt { flex: none; width: 8px; height: 8px; border-radius: 3px; background: var(--c, var(--accent)); }
+.er-m-eiweiss { --c: var(--ok); }
+.er-m-fett { --c: var(--warn); }
+.er-m-kh { --c: var(--info); }
+.er-naehr .callout .stack { flex: 1; min-width: 0; }
+
+/* Eintragen */
+.er-tabs { display: flex; width: 100%; }
+.er-tabs button { flex: 1 1 0; justify-content: center; }
+.er-reiter { margin-top: 14px; }
+.er-panel { display: flex; flex-direction: column; gap: 12px; }
+.er-panel .composer { margin: 0; }
+.er-felder { display: flex; flex-direction: column; gap: 10px; }
+.er-felder .field-row > .btn.primary { flex: 1 1 auto; }
+.er-foto-knopf { align-self: flex-start; }
+.er-ergebnis[hidden] { display: none; }
+
+/* Kamera für Barcodes */
+.er-kamera {
+  position: relative; width: 100%; max-height: 340px; aspect-ratio: 4 / 3; overflow: hidden;
+  border: 1px solid var(--line-2); border-radius: var(--r-md); background: var(--surface-3);
+}
+.er-kamera > video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.er-kamera-rahmen {
+  position: absolute; inset: 24% 12%; border: 2px solid var(--accent); border-radius: var(--r-md);
+  box-shadow: 0 0 0 100vmax var(--scrim); pointer-events: none;
+}
+.er-kamera-rahmen::after {
+  content: ""; position: absolute; left: 8px; right: 8px; top: 8%; height: 2px; border-radius: 2px;
+  background: var(--accent); box-shadow: 0 0 14px var(--accent); animation: er-scan 1.9s ease-in-out infinite alternate;
+}
+@keyframes er-scan { to { top: 90%; } }
+.er-kamera > .btn { position: absolute; top: 10px; right: 10px; z-index: 2; }
+.er-kamera-hinweis {
+  position: absolute; left: 50%; bottom: 10px; z-index: 2; max-width: calc(100% - 24px); transform: translateX(-50%);
+  padding: 5px 12px; border-radius: 99px; background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--text); font-size: var(--fs-xs); font-weight: 560; text-align: center;
+}
+
+/* Heute gegessen */
+.er-mahlzeit { align-items: flex-start; }
+.er-uhr { flex: none; width: 44px; padding-top: 2px; color: var(--text-3); font-size: var(--fs-xs); font-weight: 560; font-variant-numeric: tabular-nums; }
+.er-zeilenfuss { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: 4px; }
+.er-zeilenfuss .item-sub { margin-top: 0; }
+.er-werte { display: flex; flex: none; flex-direction: column; align-items: flex-end; gap: 1px; padding-top: 1px; font-size: var(--fs-xs); color: var(--text-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.er-werte b { color: var(--text); font-size: var(--fs-sm); font-weight: 650; }
+.er-mahlzeit .actions { align-self: center; }
+.er-neu { animation: er-neu 2.6s var(--ease); }
+@keyframes er-neu { from { background: var(--accent-soft); } to { background: transparent; } }
+
+/* Gewicht */
+.er-gew-kopf { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 20px; margin-bottom: 14px; }
+.er-gew-wert { display: flex; align-items: baseline; gap: 6px; }
+.er-gew-wert b { font-size: 2.3rem; font-weight: 720; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.er-gew-wert span { color: var(--text-3); font-size: var(--fs-sm); font-weight: 600; }
+.er-gew-info { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-size: var(--fs-sm); color: var(--text-2); text-align: right; }
+.er-delta { display: inline-flex; align-items: center; gap: 6px; font-weight: 620; }
+.er-delta.ok { color: var(--ok); }
+.er-delta.auf .icon { transform: scaleY(-1); }
+.er-gew-form { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.er-gew-form .field-row > .input { flex: 1 1 120px; }
+
+/* Woche */
+.er-legende { display: inline-flex; align-items: center; gap: 8px; color: var(--text-3); font-size: var(--fs-xs); white-space: nowrap; }
+.er-legende i { display: inline-block; width: 18px; border-top: 1.5px dashed var(--ok); }
+
+/* --- Schmal ------------------------------------------------------------------------------------------------ */
+
+@media (max-width: 1080px) {
+  .er-haupt { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 820px) {
+  .er-kopf { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-bottom: 14px; }
+  .er-spalte { gap: 14px; }
+
+  /* Ringkarte am Handy: Ring links, Titel und Zustand rechts */
+  .er-ring { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "ring kopf" "ring fuss"; align-items: center; justify-items: start; column-gap: 18px; row-gap: 6px; }
+  .er-ring > .ch-ring { --ring-s: 116px; grid-area: ring; }
+  .er-ring-kopf { grid-area: kopf; flex-direction: column; align-items: flex-start; align-self: end; gap: 8px; }
+  .er-ring-kopf .spacer { display: none; }
+  .er-ring-fuss { grid-area: fuss; align-self: start; text-align: left; font-size: var(--fs-sm); }
+
+  .er-tabs .icon { display: none; }
+  .v-ernaehrung .seg button, .v-ernaehrung .btn.sm { min-height: 40px; }
+  .v-ernaehrung .btn.icon.sm { width: 40px; height: 40px; }
+  .er-foto-knopf { align-self: stretch; }
+
+  /* Mahlzeit in drei Zeilen: Text, Werte, Abzeichen */
+  .er-mahlzeit { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: "uhr main aktion" "uhr werte aktion"; align-items: start; column-gap: 10px; row-gap: 2px; }
+  .er-uhr { grid-area: uhr; width: auto; }
+  .er-mahlzeit > .item-main { grid-area: main; }
+  .er-werte { grid-area: werte; flex-direction: row; align-items: baseline; gap: 10px; padding-top: 0; }
+  .er-mahlzeit > .actions { grid-area: aktion; align-self: center; }
+  .er-gew-info { align-items: flex-start; text-align: left; }
+  .er-gew-kopf { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 420px) {
+  .er-minis { gap: 8px; }
+  .er-kamera-rahmen { inset: 22% 8%; }
+}

@@ -1,0 +1,32 @@
+# Alfred im Raum als Dienst. Installiert deploy/einrichten.sh mit eingesetztem Nutzer und Pfad
+# nach /etc/systemd/system/. Ein Dienst pro Raum: alfred-raum@buero, alfred-raum@kueche, ...
+#
+#   sudo systemctl enable --now alfred-raum@buero
+#   journalctl -u alfred-raum@buero -f
+
+[Unit]
+Description=Alfred im Raum %i
+After=network-online.target sound.target
+Wants=network-online.target
+
+[Service]
+User=__USER__
+SupplementaryGroups=audio
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv/bin/python -m alfred.room %i
+Environment=PYTHONUNBUFFERED=1
+# Nach Absturz oder verlorener Verbindung neu starten; der Wachwort-Puffer ist in Sekunden wieder da.
+Restart=always
+RestartSec=5
+# Pipecat beendet sich auf SIGTERM sauber und schreibt das Tagesprotokoll.
+TimeoutStopSec=30
+
+# Härtung: Der Dienst braucht nur das Projektverzeichnis, die Modelle unter ~/.cache und die Audiogeräte.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

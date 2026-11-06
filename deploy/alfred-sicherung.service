@@ -1,0 +1,11 @@
+# Einmalige Sicherung; der Timer alfred-sicherung.timer startet sie täglich.
+[Unit]
+Description=Alfreds Gedächtnis sichern
+
+[Service]
+Type=oneshot
+User=__USER__
+WorkingDirectory=__DIR__
+# Ziel anpassen: Ordner oder nutzer@rechner:pfad (siehe deploy/sichern.sh).
+Environment=SICHERUNG_ZIEL=%h/alfred-sicherung
+ExecStart=/usr/bin/bash __DIR__/deploy/sichern.sh

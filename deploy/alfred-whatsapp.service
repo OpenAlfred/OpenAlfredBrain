@@ -1,0 +1,27 @@
+# WhatsApp-Brücke für Alfred: eigener Prozess in eigener Umgebung (.venv-wa), nur auf
+# 127.0.0.1:7861 erreichbar. Vorher einmal koppeln:
+#   .venv-wa/bin/python src/alfred/whatsapp_bridge.py --koppeln
+# Dann:
+#   sudo systemctl enable --now alfred-whatsapp
+
+[Unit]
+Description=WhatsApp-Brücke für Alfred
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv-wa/bin/python __DIR__/src/alfred/whatsapp_bridge.py
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=10
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

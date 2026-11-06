@@ -1,0 +1,108 @@
+/* Ansicht gedaechtnis. Nur Dinge, die components.css und views.css nicht schon können. */
+
+/* --- Reiter und Flächen ------------------------------------------------------------------------------------ */
+
+.gd-reiter { display: flex; margin-bottom: 20px; }
+.gd-tabs { max-width: 100%; }
+.gd-punkt { flex: none; width: 7px; height: 7px; margin-left: 1px; border-radius: 50%; background: var(--warn); }
+.gd-panel { display: flex; flex-direction: column; gap: 16px; min-width: 0; animation: gd-ein .24s var(--ease) both; }
+@keyframes gd-ein { from { opacity: 0; transform: translateY(4px); } }
+.gd-hinweis { max-width: 70ch; color: var(--text-2); font-size: var(--fs-sm); }
+
+/* Hinweis mit Knopf: der Knopf rutscht in eine eigene Zeile, wenn es eng wird. */
+.gd-mit-knopf { flex-wrap: wrap; row-gap: 10px; }
+.gd-mit-knopf .gd-callout-text { flex: 1 1 260px; min-width: 0; }
+.gd-mit-knopf .btn { flex: none; margin-left: auto; }
+
+/* --- Kontext ------------------------------------------------------------------------------------------------- */
+
+.gd-kontext > * + * { margin-top: 14px; }
+.gd-kontext > .card-h { margin-bottom: 0; }
+.textarea.gd-editor {
+  display: block; height: clamp(320px, 56vh, 640px); min-height: 320px;
+  font-family: var(--font-mono); font-size: .88rem; line-height: 1.65; tab-size: 2;
+  resize: vertical; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.gd-fuss { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.gd-zaehler { color: var(--text-3); font-size: var(--fs-xs); }
+.btn.primary .kbd { margin-left: 2px; color: inherit; background: color-mix(in srgb, var(--accent-ink) 14%, transparent); border-color: color-mix(in srgb, var(--accent-ink) 28%, transparent); }
+
+/* --- Profil -------------------------------------------------------------------------------------------------- */
+
+.gd-fakt { display: flex; flex-direction: column; gap: 8px; padding: 16px 16px 18px; transition: border-color .18s; }
+.gd-fakt:hover { border-color: var(--line-2); }
+.gd-fakt-kopf { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+.gd-fakt-name {
+  display: inline-flex; align-items: center; flex: 1; gap: 7px; min-width: 0;
+  font-size: var(--fs-2xs); font-weight: 650; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); overflow-wrap: anywhere;
+}
+.gd-fakt-name .icon { color: var(--accent); font-size: 1.35em; }
+.gd-fakt-wert { font-size: 1.3rem; font-weight: 650; letter-spacing: -.02em; line-height: 1.25; overflow-wrap: anywhere; }
+.gd-aktionen { display: flex; gap: 2px; opacity: 0; transition: opacity .15s; }
+.gd-fakt:hover .gd-aktionen, .gd-fakt:focus-within .gd-aktionen { opacity: 1; }
+@media (hover: none) { .gd-aktionen { opacity: 1; } }
+.gd-profil-form .input { flex: 1 1 180px; }
+.gd-profil-form input[name="wert"] { flex: 2 1 220px; }
+
+/* --- Regeln -------------------------------------------------------------------------------------------------- */
+
+.gd-nr { font-size: var(--fs-sm); font-weight: 650; font-variant-numeric: tabular-nums; }
+
+/* --- Notizen und Protokolle: Aufklapper ------------------------------------------------------------------------ */
+
+.gd-liste { display: flex; flex-direction: column; gap: 10px; }
+.gd-acc-h { margin: 0; font: inherit; letter-spacing: normal; }  /* sonst erbt der Button die fette Überschrift */
+.gd-acc-btn {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 58px; padding: 11px 18px;
+  border: 0; background: transparent; color: inherit; text-align: left; transition: background .12s;
+}
+.gd-acc-btn:hover { background: var(--surface-hover); }
+.gd-acc-btn:focus-visible { outline-offset: -3px; }  /* die Karte schneidet einen Fokusring außen ab */
+.gd-acc-titel { flex: 1; min-width: 0; font-size: var(--fs-md); font-weight: 600; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.gd-acc-meta { color: var(--text-3); font-size: var(--fs-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gd-acc-pfeil { color: var(--text-3); transition: transform .2s var(--ease); }
+.gd-acc-btn[aria-expanded="true"] .gd-acc-pfeil { transform: rotate(180deg); }
+.gd-acc-body { padding: 16px 22px 22px; border-top: 1px solid var(--line); animation: gd-ein .22s var(--ease) both; }
+
+.gd-notizen-kopf { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.gd-suche { position: relative; flex: 1 1 280px; max-width: 480px; }
+.gd-suche > .icon { position: absolute; left: 13px; top: 50%; margin-top: -.575em; color: var(--text-3); pointer-events: none; }
+.gd-suche .input { padding-left: 38px; padding-right: 42px; }
+.gd-such-x { position: absolute; right: 4px; top: 50%; height: 30px; margin-top: -15px; }
+.gd-treffer { margin: 0 -.1em; padding: 0 .1em; border-radius: 4px; background: color-mix(in srgb, var(--warn) 32%, transparent); color: inherit; }
+
+/* --- Lesetexte (Notizen, Protokolle, Feedback) ------------------------------------------------------------------- */
+
+.gd .prose { max-width: 78ch; }
+.gd .prose pre {
+  margin: .9em 0; padding: 12px 14px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--surface-2); font-size: .86em; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.gd .prose pre code { padding: 0; background: none; font-size: 1em; }
+.gd .prose table { display: block; overflow-x: auto; }
+/* Protokolle: Die Uhrzeit über jedem Eintrag als kleine Zeitmarke statt als Überschrift. */
+.gd-prot h4 { margin: 1.3em 0 .25em; color: var(--accent); font-size: var(--fs-xs); font-weight: 650; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.gd-prot h4:first-child { margin-top: 0; }
+.gd-prot p { margin: .3em 0 .6em; }
+
+/* --- Schmale Bildschirme: Touch-Ziele von mindestens 40 px ---------------------------------------------------------- */
+
+@media (max-width: 820px) {
+  .gd-reiter { display: block; }
+  .gd-reiter .seg { display: flex; }
+  .gd .seg button { flex: none; height: 40px; padding: 0 12px; }
+  .gd .btn.sm { height: 40px; }
+  .gd .btn.icon.sm { width: 40px; }
+  .gd-such-x { height: 40px; margin-top: -20px; }
+  .gd-acc-btn { padding: 12px 14px; }
+  .gd-acc-body { padding: 14px 16px 18px; }
+  .gd-fakt-wert { font-size: 1.2rem; }
+  .textarea.gd-editor { font-size: 16px; }  /* iOS zoomt in kleinere Felder hinein */
+}
+@media (max-width: 560px) {
+  .gd-profil-form > * { flex: 1 1 100%; }
+  /* Kontext: die beiden Knöpfe nebeneinander in voller Breite, der Zähler als kleine Zeile darunter */
+  .gd-fuss .spacer { display: none; }
+  .gd-fuss .btn { flex: 1; }
+  .gd-zaehler { order: 3; flex: 1 0 100%; }
+}

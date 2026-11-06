@@ -1,0 +1,27 @@
+# Alfred im Browser als Dienst, für den Fernzugriff vom iPhone über Tailscale.
+# Lauscht nur auf localhost:7860; Tailscale legt HTTPS davor:
+#   sudo tailscale serve --bg 7860
+# Danach: https://<rechnername>.<tailnet>.ts.net auf dem iPhone (Tailscale-App an).
+#   sudo systemctl enable --now alfred-browser
+
+[Unit]
+Description=Alfred im Browser (Fernzugriff)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv/bin/python bot.py --host 127.0.0.1 --port 7860
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=5
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

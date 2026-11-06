@@ -1,0 +1,5 @@
+# udev-Regel für Jabra Speak 510
+# Erlaubt Benutzern und Diensten in der Gruppe 'audio' den Zugriff auf das USB-HID-Interface (LED-Steuerung).
+# Installation: sudo cp deploy/99-jabra.rules /etc/udev/rules.d/ && sudo udevadm control --reload-rules && sudo udevadm trigger
+
+KERNEL=="hidraw*", ATTRS{idVendor}=="0b0e", ATTRS{idProduct}=="0422", MODE="0660", GROUP="audio"

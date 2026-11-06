@@ -1,0 +1,42 @@
+.venv/
+.venv-wa/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+
+# Geheimnisse bleiben lokal
+.env
+# Die eigene Konfiguration (ntfy-Thema, Geräte, Schwellen); im Repository liegt config/alfred.beispiel.yaml
+config/alfred.yaml
+# Die eigene Persönlichkeit (Name, Ton, Modi); im Repository liegt config/persoenlichkeit.beispiel.yaml
+config/persoenlichkeit.yaml
+
+# Persönliche Daten und Google-Zugang bleiben lokal
+gedaechtnis/
+config/google_client_secret.json
+config/google_token.json
+config/whatsapp.db*
+config/whatsapp_bridge.token
+
+# Referenzaufnahmen der eigenen Stimmen (Sicherung, um sie bei Mistral neu anzulegen)
+config/stimmen/
+config/stimme.json
+config/spotify_token.json
+
+# Zwischengespeicherte Sprachausgabe und Logdateien
+cache/
+logs/
+
+# Lokale Arbeitsumgebung von Claude Code (Arbeitsbäume, persönliche Einstellungen)
+.claude/
+
+# Sicherheitsnetz: Zugangsdaten nie einchecken, auch wenn sie anders heißen als oben
+.env.*
+!.env.example
+*.pem
+*.key
+config/*token*
+config/*secret*

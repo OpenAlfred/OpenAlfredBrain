@@ -1,0 +1,189 @@
+# Technik: Modelle, Stimme, Gesprächsverhalten, Wachwort und Räume.
+# Änderungen wirken beim nächsten Start.
+
+# Slug oder UUID einer Mistral-Stimme. Auswahl anzeigen: python -m alfred.voices
+# Mistral liefert vor allem englische und französische Standardstimmen. gb_oliver_neutral spricht
+# Deutsch mit englischem Akzent. Eine eigene deutsche Stimme legst du in der Mistral-Konsole an;
+# dann trägst du hier ihre UUID ein.
+stimme: gb_oliver_neutral
+
+modelle:
+  sprecher: mistral-small-2603 # führt das Gespräch
+  denker: zai-glm-5-3 # recherchiert und rechnet im Hintergrund
+  werkzeuge: mistral-small-2603 # Websuche und Code für den Denker, Tagesprotokoll und Nährwerte (ohne Nachdenken)
+  transkription: voxtral-mini-transcribe-realtime-2602
+  sprachausgabe: voxtral-mini-tts-2603
+  sprachnachricht: voxtral-mini-latest # hört Sprachnachrichten aus der App ab, Aufnahme als Datei statt Echtzeit
+
+gespraech:
+  # Nur Browser: Alfred begrüßt dich, sobald die Verbindung steht.
+  begruessung: true
+
+  # Solange Alfred spricht, unterbricht ihn erst ein Einwurf mit so vielen Wörtern.
+  # "Mhm" und "ja okay" lässt er damit durchgehen.
+  unterbrechen_ab_woertern: 3
+
+  # Diese Wörter unterbrechen ihn sofort, auch einzeln.
+  stoppwoerter: [stopp, stop, halt, warte, moment, alfred]
+
+  # Nur Raum: Nach so langer Pause beginnt ein neues Gespräch ohne den alten Verlauf.
+  vergessen_nach_minuten: 15
+
+  # Klingt dein Satz noch unfertig, wartet Alfred höchstens so viele Sekunden Stille ab.
+  # Kleiner = schneller, aber er fällt dir bei Denkpausen eher ins Wort.
+  pause_max_sekunden: 1.5
+
+  # Zuhören: Sagst du "Hör mal zu", "Lass mich ausreden" oder diktierst eine Nachricht, antwortet
+  # Alfred erst nach so vielen Sekunden Stille; Denkpausen darunter unterbrechen ihn nicht.
+  # "Fertig" oder "Was meinst du?" am Satzende beenden das Zuhören sofort.
+  zuhoeren_pause_sekunden: 5
+
+  # Transkripte in anderen Sprachen verwirft er; die Spracherkennung kippt bei Undeutlichem
+  # sonst ins Spanische oder Niederländische, und das Modell nimmt das ernst.
+  sprachen: [de, en]
+
+# Ungefragtes: Was Alfred von sich aus sagt, ohne dass du es ausgelöst hast (Routinen, später
+# Briefings und Vorschläge). Timer, eigene Erinnerungen, Denker- und Auftragsergebnisse sind davon
+# nicht betroffen, die kommen immer. Was hier nicht durchkommt, geht als Push aufs Telefon (wenn
+# eingerichtet und der Hinweis einen Push-Text hat) oder wartet bis zur nächsten erlaubten Zeit;
+# Veraltetes verfällt (eine Routine zwei Stunden nach ihrer Zeit). „Nicht jetzt" schiebt eine
+# Ansage auf, „lass das" oder „nie wieder" schaltet die Quelle nach deinem Ja dauerhaft ab
+# (Regel in gedaechtnis/regeln.yaml, mit regel_loeschen wieder weg).
+proaktiv:
+  max_pro_tag: 6            # höchstens so viele ungefragte Ansagen am Tag; Dringendes darf darüber hinaus
+  ruhe_von: "22:00"         # in der Ruhezeit nichts Ungefragtes, auch nichts Dringendes (Anführungszeichen!)
+  ruhe_bis: "07:00"         # gleiche Zeiten = keine Ruhezeit
+  aufschieben_minuten: 30   # "Nicht jetzt": so viel später noch einmal
+  modi:                     # je Modus: alles, nur_dringendes oder nichts; nicht genannte Modi: alles
+    feierabend: nur_dringendes
+    gaeste: nichts
+
+# Nur Raum: Bis eine der Phrasen fällt, hört allein ein lokaler Erkenner mit, und kein Audio
+# verlässt den Rechner. Danach bleibt Alfred offen_sekunden lang ohne Wachwort ansprechbar.
+wachwort:
+  # Einzelne Wörter funktionieren am besten. Jedes Wort muss im Vokabular des Modells stehen,
+  # sonst bricht der Start mit einem Hinweis ab.
+  phrasen: [alfred]
+  offen_sekunden: 10
+  # Danach hört er bis zu so vielen Sekunden Stille weiter, aber nur noch auf deine Stimme (nur
+  # mit stimmerkennung.aktiv): Pausen im Gespräch ohne neues Wachwort, ohne dass der Fernseher mitredet.
+  # So lange geht auch Raumaudio zur Transkription an Mistral. 0 = nach offen_sekunden zu.
+  # "Danke, das war's" beendet das Gespräch sofort.
+  gespraech_sekunden: 120
+  # Bereitschaft (Standby): Alfred reagiert nur, wenn sein Name fällt, und hört nach jeder Antwort
+  # weg; gegen Fernseher und Videos. Per Stimme umschaltbar: "Alfred, Standby" / "Standby aus".
+  # Hier steht nur, womit er startet.
+  bereitschaft: false
+  # In Bereitschaft bleibt er nach seiner Antwort so lange offen, für ein schnelles "Danke" ...
+  bereitschaft_nachlauf_sekunden: 3
+  # ... und nach einer Frage so lange, damit deine Antwort kein Wachwort braucht.
+  rueckfrage_sekunden: 8
+  # Das kleine Modell (45 MB) reicht am Schreibtisch. Erkennt es das Wachwort quer durch den
+  # Raum nicht zuverlässig, hilft das große: vosk-model-de-0.21 (1,9 GB, lädt beim ersten
+  # Start, braucht rund 3 GB Arbeitsspeicher).
+  modell: vosk-model-small-de-0.15
+
+# Ein Eintrag pro Raum, gestartet mit: python -m alfred.room <name>
+# mikrofon und lautsprecher sind Namensteile des Geräts; leer = Standardgerät des Systems.
+# Geräte anzeigen: python -m alfred.room --geraete
+raeume:
+  buero:
+    mikrofon: Jabra
+    lautsprecher: Jabra
+
+# Jabra Speak 510 im Raum-Modus: Die grüne Hörer-LED leuchtet, solange Alfred wach ist, blinkt,
+# während er nachdenkt oder ein Werkzeug läuft, und geht aus, wenn er wieder auf das Wachwort
+# wartet. Mehr zeigt das Gerät nicht, ohne das Mikrofon stumm zu schalten; der rote Ring ist dort
+# die Stummschaltung (docs/erkenntnisse.md, 9.10.2026).
+# Am Gerät ausprobieren: python -m alfred.jabra_led --an, dann --aus.
+# Unter Linux braucht der Dienst Zugriff auf das HID-Gerät: deploy/99-jabra.rules.
+jabra:
+  led_aktiv: true
+  blinken_sekunden: 0.5   # beim Nachdenken jeweils so lange an und aus
+  # USB-Kennung; ein Speak 510 anderer Revision zeigt python -m alfred.jabra_led --info
+  vendor_id: 0x0b0e
+  product_id: 0x0422
+
+# Gedächtnis als Markdown-Dateien: kontext.md, wissen/<bereich>.md, protokoll/<tag>.md.
+# Der Ordner liegt im Projekt und steht in .gitignore, weil er persönliche Daten enthält.
+gedaechtnis:
+  ordner: gedaechtnis
+
+# Google Kalender. Einrichtung: python -m alfred.kalender --einrichten (Anleitung in src/alfred/kalender.py).
+# Ohne Token läuft Alfred ohne Kalender.
+kalender:
+  vorlauf_minuten: 10 # so lange vor einem Termin erinnert er
+  client_secret: config/google_client_secret.json
+  token: config/google_token.json
+
+# Wetter über Open-Meteo, kostenlos und ohne Konto. Ohne Ort im Satz nimmt Alfred den Wohnort
+# aus seinem Profil (gedaechtnis/profil.yaml), den er beim ersten Mal erfragt. Der Ort hier ist
+# nur ein Ersatz, falls das Profil leer ist; Stadtname reicht.
+wetter:
+  ort: ""
+
+# WhatsApp über die Brücke (src/alfred/whatsapp_bridge.py). Aktiv, sobald die Token-Datei
+# existiert, also nach dem ersten Start der Brücke. Anleitung in der README.
+whatsapp:
+  url: http://127.0.0.1:7861
+  token: config/whatsapp_bridge.token
+  landesvorwahl: "49"        # für Nummern, die mit 0 beginnen
+  # Nur Windows: Läuft die Brücke nicht, startet Alfred sie selbst (unter Linux macht das systemd).
+  # Auf false stellen, sobald die Brücke auf einem anderen Rechner mit derselben Kopplung läuft.
+  bruecke_starten: true
+
+# Push aufs Telefon über ntfy (App "ntfy" auf dem iPhone, Thema abonnieren). Leer = aus.
+# Eigener Server auf dem Rechner: url http://<rechnername>:8080 (über Tailscale);
+# oder https://ntfy.sh mit einem langen, zufälligen Thema, weil dort jeder mit dem Namen mitlesen kann.
+benachrichtigung:
+  url: ""
+  thema: ""
+  token: ""
+  # Adresse der App vom Handy aus, z. B. https://<rechnername>.<tailnet>.ts.net/app. Dann hat
+  # jede Rückfrage ("Termin anlegen?") im Push Ja/Nein-Knöpfe, und du musst nicht im Raum sein.
+  app_url: ""
+
+# Eigene Suchmaschine (SearXNG auf dem Rechner): Websuche in einer Sekunde und kostenlos.
+# Leer = Mistrals Websuche (liest Seiten, dauert Sekunden, kostet rund drei Cent).
+# Anleitung in der README; SearXNG muss das JSON-Format erlauben.
+suche:
+  url: ""
+
+# Spotify: Zugangsdaten in .env, Zugang per python -m alfred.musik --einrichten. Gespielt wird
+# auf einem Spotify-Connect-Gerät; "geraet" ist ein Namensteil davon, leer = das gerade aktive.
+spotify:
+  token: config/spotify_token.json
+  geraet: ""
+
+# Nur deine Stimme: Mit angelerntem Profil (python -m alfred.stimme --anlernen) zählt ein
+# Ja zu Terminen, Nachrichten und Routinen nur, wenn die Stimme passt. Die Ähnlichkeit steht
+# bei jedem Gesprächszug im Log; liegt deine eigene Stimme öfter unter der Schwelle, Schwelle senken.
+stimmerkennung:
+  # Aus: Die Stimmerkennung wies die eigene Stimme zu oft ab, und man musste alles mehrmals sagen.
+  # Dann schließt die Schleuse nach offen_sekunden, und heikle Aktionen (WhatsApp, Mail, Ende des
+  # Gästemodus) sichert das Codewort: python -m alfred.codewort. Mit true gelten Profil und
+  # Schwellen unten (anlernen: python -m alfred.stimme --anlernen).
+  aktiv: false
+  profil: config/stimme.json
+  # wespeaker-resnet34 (lädt beim ersten Gebrauch, 26 MB) trennt Stimmen besser und schneller als
+  # vosk-model-spk-0.4. Ein Profil gilt nur für das Modell, mit dem es angelernt wurde; das
+  # Anlernen trägt sein Modell hier selbst ein.
+  modell: wespeaker-resnet34
+  schwelle: 0.65
+  # Mildere Schwelle für kurze Sätze in Gesprächspausen (und fürs Wachwort, siehe unten).
+  schwelle_wachwort: 0.5
+  # Auch das Wachwort nur in deiner Stimme annehmen. Aus, weil „Alfred" allein zu kurz für das
+  # Sprechermodell ist: Es wies dich je nach Lautstärke und Tonlage bei jedem zweiten Versuch ab.
+  wachwort: false
+
+# Preise in US-Dollar für die Kostenanzeige ("Was hast du heute gekostet?"). Alfred zählt
+# Token, Transkriptionsminuten, Zeichen der Sprachausgabe und Websuchen selbst. 0 heißt
+# Listenpreis von docs.mistral.ai (Stand 6.10.2026, in src/alfred/config.py); Modelle ohne
+# Listenpreis nennt er als "ohne Preis". Zwischengespeicherte Eingabe (eingabe_cache) ist billiger.
+preise:
+  transkription_pro_minute: 0.006
+  websuche_pro_aufruf: 0.03
+  sprachausgabe_pro_million_zeichen: 0   # Listenpreis 16
+  modelle:
+    mistral-small-2603: { eingabe: 0.15, ausgabe: 0.6 }   # je Million Token
+    zai-glm-5-3: { eingabe: 1.4, ausgabe: 4.4, eingabe_cache: 0.14 }

@@ -1,0 +1,1 @@
+"""Alfred: sprachgesteuerter persönlicher Agent."""

@@ -1,0 +1,26 @@
+# Alfreds App (PWA) für iPhone und Browser, nur auf localhost; HTTPS über Tailscale:
+#   sudo tailscale serve --bg --set-path /app 7870
+# Dann auf dem iPhone: https://<rechnername>.<tailnet>.ts.net/app/  (Teilen > Zum Home-Bildschirm)
+#   sudo systemctl enable --now alfred-web
+
+[Unit]
+Description=Alfreds App
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/.venv/bin/python -m alfred.web --host 127.0.0.1 --port 7870
+Environment=PYTHONUNBUFFERED=1
+Restart=always
+RestartSec=5
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target
