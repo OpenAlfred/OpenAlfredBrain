@@ -3,7 +3,7 @@
 Alles, was sich aus dem Register ableiten lässt (Namen, Gruppen, Stufen, Voraussetzungen, Modi),
 kommt von dort und kann nicht veralten. Von Hand stehen hier nur die Anzeigetexte: ein Satz je
 Werkzeug (die Beschreibung für das Modell ist an das Modell gerichtet und taugt nicht zum Lesen),
-Titel, Symbol und Beispielsätze je Gruppe (aus der README, „Was Alfred kann") und die Namen der
+Titel, Symbol und Beispielsätze je Gruppe (aus dem Handbuch, „Was Alfred kann") und die Namen der
 Anbindungen. Ein neues Werkzeug oder eine neue Gruppe braucht hier einen Eintrag; ohne ihn
 scheitert tests/test_uebersicht.py.
 """

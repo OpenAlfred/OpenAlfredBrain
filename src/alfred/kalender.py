@@ -1,6 +1,6 @@
 """Google Kalender: Termine lesen, anlegen und rechtzeitig daran erinnern.
 
-Einrichten (einmalig, am Rechner mit Browser; die Schritte im Detail stehen in der README):
+Einrichten (einmalig, am Rechner mit Browser; die Schritte im Detail stehen im Handbuch, docs/handbuch.md):
   1. In der Google Cloud Console ein Projekt anlegen, die Google Calendar API aktivieren,
      unter "Google Auth Platform" die App als "Extern" anlegen und veröffentlichen, dann einen
      OAuth-Client vom Typ "Desktop-App" erstellen. Dessen JSON-Datei als
@@ -193,7 +193,7 @@ def einrichten(client_secret: Path, token: Path) -> None:
     if not client_secret.exists():
         raise SystemExit(
             f"{client_secret} fehlt: die JSON-Datei des OAuth-Clients aus der Google Cloud Console. "
-            "Die Schritte stehen in der README unter Kalender."
+            "Die Schritte stehen im Handbuch (docs/handbuch.md) unter Kalender."
         )
     flow = InstalledAppFlow.from_client_secrets_file(str(client_secret), SCOPES)
     # prompt=consent: Google gibt das Refresh-Token sonst nur bei der allerersten Zustimmung

@@ -2,8 +2,8 @@
 
 Wie Alfreds Bausteine zusammenspielen, Stand 6.10.2026. Die Regeln für Änderungen stehen in
 [CLAUDE.md](../CLAUDE.md), Messwerte und die Chronik der Live-Läufe in
-[erkenntnisse.md](erkenntnisse.md). Die Dateiübersicht mit einer Zeile je Modul steht in der
-README, Abschnitt „Aufbau"; die Anleitungen zum Einrichten der Anbindungen ebenfalls dort.
+[erkenntnisse.md](erkenntnisse.md). Die Dateiübersicht mit einer Zeile je Modul steht im
+[Handbuch](handbuch.md), Abschnitt „Projektaufbau"; die Anleitungen zum Einrichten der Anbindungen ebenfalls dort.
 
 ## Prozesse
 
@@ -127,8 +127,8 @@ Drei Prozesse arbeiten auf denselben Dateien unter `gedaechtnis/` und `config/`.
   Gruppe, kein Kanal `@newsletter`, kein Status `@broadcast`), höchstens `MAX_EINGANG` (50) im
   Speicher; das Log nennt je Nachricht die Art des Chats. Bis zum 16.10.2026 kamen Kanäle mit
   durch und verdrängten mit hunderten Deal-Posts am Tag jede echte Nachricht.
-- Verknüpftes Gerät = kein offizieller Weg, Sperrrisiko klein, aber vorhanden (steht in der
-  README). Die Sitzung darf nie auf zwei Rechnern gleichzeitig laufen.
+- Verknüpftes Gerät = kein offizieller Weg, Sperrrisiko klein, aber vorhanden (steht im
+  Handbuch). Die Sitzung darf nie auf zwei Rechnern gleichzeitig laufen.
 
 ### Gemeinsame Bausteine aller Prozesse
 

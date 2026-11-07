@@ -146,7 +146,7 @@ export function mount(wurzel) {
     if (g.fehlt) {
       inhalt.append(h("div", { class: "callout warn" }, icon("link"), h("div", null,
         h("div", { class: "callout-title" }, `Nicht eingerichtet: ${g.braucht.join(", ") || "eine Anbindung"}`),
-        h("div", null, `${plural(g.fehlt, "Werkzeug ist", "Werkzeuge sind")} bis dahin nicht verfügbar; Alfred sagt dann ehrlich, dass er das nicht kann. Einrichten: README, Abschnitt „Anbindungen einrichten“.`))));
+        h("div", null, `${plural(g.fehlt, "Werkzeug ist", "Werkzeuge sind")} bis dahin nicht verfügbar; Alfred sagt dann ehrlich, dass er das nicht kann. Einrichten: Handbuch (docs/handbuch.md), Abschnitt „Anbindungen einrichten“.`))));
     }
     if (!g.im_modus) {
       inhalt.append(h("div", { class: "callout" }, icon("sliders"), h("div", null, h("div", { class: "callout-title" }, `Im Modus „${m.name}“ aus`),

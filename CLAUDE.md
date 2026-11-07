@@ -5,7 +5,7 @@ Sicherheit, niedrige Kosten, Modularität, Gespräch in Echtzeit.
 
 Hier steht nur, was bei jeder Änderung gilt. Hintergründe: `docs/architektur.md` (Bausteine,
 Prozesse, Pipecat, Wachwort, Deploy, Gedächtnis) und `docs/erkenntnisse.md` (Laborbuch nach
-Datum). Stand und nächste Schritte: README, „Stand".
+Datum). Stand und nächste Schritte: docs/handbuch.md, „Stand".
 
 ## Befehle
 

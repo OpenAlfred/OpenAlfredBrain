@@ -309,7 +309,7 @@ async def pruefe_anbindungen(settings: Settings) -> list[Befund]:
         except Exception as e:  # noqa: BLE001
             befunde.append(Befund("WhatsApp", "warnung", f"Brücke nicht erreichbar ({e}); Nachrichten gehen nicht"))
     else:
-        befunde.append(Befund("WhatsApp", "warnung", "nicht eingerichtet (Brücke koppeln, siehe README)"))
+        befunde.append(Befund("WhatsApp", "warnung", "nicht eingerichtet (Brücke koppeln, siehe Handbuch)"))
 
     if os.getenv("MAIL_ADRESSE") and os.getenv("MAIL_PASSWORT"):
         try:

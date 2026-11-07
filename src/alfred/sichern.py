@@ -9,7 +9,7 @@ sind. Das Archiv enthält persönliche Daten und Zugangsdaten: entsprechend able
     python -m alfred.sichern --behalten 30       -> 30 Tage aufheben
 
 Täglich: unter Linux der systemd-Timer alfred-sicherung (deploy/einrichten.sh), unter Windows
-die Aufgabenplanung (Befehl in der README).
+die Aufgabenplanung (Befehl im Handbuch).
 """
 
 from __future__ import annotations

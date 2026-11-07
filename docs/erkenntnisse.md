@@ -216,7 +216,7 @@ eigener Prozess auf 127.0.0.1:7861 mit Token-Datei; Alfred spricht sie über htt
 `NewClient(name)` nimmt den Pfad der Sitzungsdatenbank als Namen, `connect()` blockiert und
 läuft im Thread, QR über `client.event.qr(handler)`. Ohne Kopplung geprüft: Status, Fehler;
 das Senden selbst braucht Alexanders Kopplung. Verknüpftes Gerät = kein offizieller Weg,
-Sperrrisiko klein, aber vorhanden; steht so in der README.
+Sperrrisiko klein, aber vorhanden; steht so im Handbuch.
 
 ### Aufgaben und Push
 

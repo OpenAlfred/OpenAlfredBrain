@@ -123,7 +123,7 @@ wetter:
   ort: ""
 
 # WhatsApp über die Brücke (src/alfred/whatsapp_bridge.py). Aktiv, sobald die Token-Datei
-# existiert, also nach dem ersten Start der Brücke. Anleitung in der README.
+# existiert, also nach dem ersten Start der Brücke. Anleitung im Handbuch (docs/handbuch.md).
 whatsapp:
   url: http://127.0.0.1:7861
   token: config/whatsapp_bridge.token
@@ -145,7 +145,7 @@ benachrichtigung:
 
 # Eigene Suchmaschine (SearXNG auf dem Rechner): Websuche in einer Sekunde und kostenlos.
 # Leer = Mistrals Websuche (liest Seiten, dauert Sekunden, kostet rund drei Cent).
-# Anleitung in der README; SearXNG muss das JSON-Format erlauben.
+# Anleitung im Handbuch (docs/handbuch.md); SearXNG muss das JSON-Format erlauben.
 suche:
   url: ""
 

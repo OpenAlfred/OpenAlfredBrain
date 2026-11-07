@@ -134,9 +134,9 @@ export function mount(wurzel) {
     ...DIENSTE.map(() => h("div", { class: "card" }, skelett(2, 22))));
 
   function dienstHinweis(d, z, dienste) {
-    if (z.art === "off") return "Einrichten: siehe README, Abschnitt Anbindungen.";
-    if (d.id === "suche" && z.art === "warn") return "Mit einer eigenen Suche (SearXNG) kostet die Websuche nichts. Einrichten: siehe README, Abschnitt Anbindungen.";
-    if (d.id === "whatsapp" && z.art === "warn") return "Koppeln: siehe README, Abschnitt Anbindungen.";
+    if (z.art === "off") return "Einrichten: siehe Handbuch, Abschnitt Anbindungen einrichten.";
+    if (d.id === "suche" && z.art === "warn") return "Mit einer eigenen Suche (SearXNG) kostet die Websuche nichts. Einrichten: siehe Handbuch, Abschnitt Anbindungen einrichten.";
+    if (d.id === "whatsapp" && z.art === "warn") return "Koppeln: siehe Handbuch, Abschnitt Anbindungen einrichten.";
     if (d.id === "whatsapp" && z.art === "danger") return dienste.whatsapp?.fehler || "Die Brücke läuft nicht.";
     return null;
   }
