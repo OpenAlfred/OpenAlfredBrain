@@ -64,8 +64,8 @@ Browser. Die Anleitung gilt für Windows; für Linux siehe [Installation](#insta
    PowerShell ein:
 
    ```powershell
-   git clone https://github.com/OpenAlfred/alfred.git
-   cd alfred
+   git clone https://github.com/OpenAlfred/OpenAlfredBrain.git
+   cd OpenAlfredBrain
    py -3.13 -m venv .venv
    .venv\Scripts\python -m pip install -e ".[raum]"
    copy .env.example .env
@@ -161,8 +161,8 @@ Prüfe unter Windows mit `py -0`, ob Python 3.13 installiert ist.
 2. **Projekt holen** (mit Git, sonst ZIP-Datei von GitHub laden und entpacken):
 
    ```powershell
-   git clone https://github.com/OpenAlfred/alfred.git
-   cd alfred
+   git clone https://github.com/OpenAlfred/OpenAlfredBrain.git
+   cd OpenAlfredBrain
    ```
 
 3. **Umgebung und Pakete** (`[raum]` brauchst du für Mikrofon und Lautsprecher am Rechner):
@@ -193,8 +193,8 @@ Prüfe unter Windows mit `py -0`, ob Python 3.13 installiert ist.
 2. Projekt holen und einrichten:
 
    ```bash
-   git clone https://github.com/OpenAlfred/alfred.git
-   cd alfred
+   git clone https://github.com/OpenAlfred/OpenAlfredBrain.git
+   cd OpenAlfredBrain
    python3 -m venv .venv
    .venv/bin/python -m pip install -e ".[raum]"
    cp .env.example .env

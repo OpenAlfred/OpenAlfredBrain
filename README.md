@@ -1,13 +1,13 @@
 <img src="docs/logo.svg" alt="" width="96" height="96" />
 
-# Alfred
+# OpenAlfredBrain
 
-A voice-controlled personal agent. You talk to Alfred like to a person: he answers in real time,
-remembers what matters to you and gets things done, such as reminders and timers, appointments in
-Google Calendar, tasks and shopping lists, messages and emails (only after your yes) or research he
-does in the background. He runs in the browser or as a permanent service in a room, where he listens
-for a wake word. He is built with [Pipecat](https://docs.pipecat.ai) and the models of
-[Mistral AI](https://mistral.ai).
+OpenAlfredBrain is Alfred, a voice-controlled personal agent. You talk to him like to a person: he
+answers in real time, remembers what matters to you and gets things done, such as reminders and
+timers, appointments in Google Calendar, tasks and shopping lists, messages and emails (only after
+your yes) or research he does in the background. He runs in the browser or as a permanent service in
+a room, where he listens for a wake word. He is built with [Pipecat](https://docs.pipecat.ai) and the
+models of [Mistral AI](https://mistral.ai).
 
 Alfred speaks German, and so do his prompts, configuration keys and docs. He runs in the everyday
 life of his developer but is not a finished product yet. What has been verified and what has not is
@@ -21,8 +21,8 @@ You need Python 3.11 or newer (tested: 3.13 on Windows 11, 3.12 on Ubuntu 24.04)
 [Installation](docs/handbuch.md#installation) in the handbook (in German).
 
 ```powershell
-git clone https://github.com/OpenAlfred/alfred.git
-cd alfred
+git clone https://github.com/OpenAlfred/OpenAlfredBrain.git
+cd OpenAlfredBrain
 py -3.13 -m venv .venv
 .venv\Scripts\python -m pip install -e ".[raum]"
 copy .env.example .env
@@ -142,7 +142,7 @@ All docs are in German.
   modes, sorted by date.
 - [docs/tickets/](docs/tickets/README.md): ideas for extensions.
 
-Bug reports and ideas are welcome as [issues](https://github.com/OpenAlfred/alfred/issues).
+Bug reports and ideas are welcome as [issues](https://github.com/OpenAlfred/OpenAlfredBrain/issues).
 
 ## License
 
