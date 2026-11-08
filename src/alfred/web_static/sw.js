@@ -1,5 +1,5 @@
 // Service Worker: Die Oberfläche kommt auch ohne Netz, Daten immer frisch vom Server.
-const CACHE = "alfred-v4";
+const CACHE = "alfred-v5";
 const SHELL = [
   "./",
   "static/css/tokens.css", "static/css/base.css", "static/css/components.css", "static/css/views.css",
